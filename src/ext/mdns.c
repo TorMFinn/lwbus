@@ -14,6 +14,7 @@
 #else
 #include <netdb.h>
 #include <ifaddrs.h>
+#include <sys/select.h>
 #endif
 
 // Alias some things to simulate recieving data to fuzz library

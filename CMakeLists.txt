@@ -1,12 +1,20 @@
 cmake_minimum_required(VERSION 3.10)
 project(lwbus)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
+
+find_package(Boost REQUIRED COMPONENTS
+   system
+)
 
 add_library(lwbus
    src/ext/mdns.c
-   src/lwbus.cc
-   src/discover.cc
+   src/ServiceAdvertiser.cpp
+   src/ServiceLookup.cpp
+)
+
+target_link_libraries(lwbus
+   Boost::system
 )
 
 target_include_directories(lwbus PRIVATE
@@ -17,8 +25,10 @@ target_include_directories(lwbus PUBLIC
    include
 )
 
-add_executable(bus_node
-   src/bus_node_test.cc
-   )
+add_executable(lwbus_test
+   src/lwbus_test.cpp
+)
 
-   target_link_libraries(bus_node lwbus)
+target_link_libraries(lwbus_test
+   lwbus
+)
